@@ -1,0 +1,106 @@
+<resources>
+    <!-- Application Name -->
+    <string name="app_name">Sagara Rice Mill Management</string>
+
+    <!-- Spinner Labels -->
+    <string name="select_shop">Select Shop</string>
+    <string name="select_rice_bag">Select Rice Bag</string>
+
+    <!-- EditText Hints -->
+    <string name="hint_enter_quantity">Enter quantity</string>
+
+    <!-- Button Labels -->
+    <string name="button_add_to_cart">Add to Cart</string>
+    <string name="button_issue_all">Issue All</string>
+
+    <!-- Cart Item Labels -->
+    <string name="label_size">Size:</string>
+    <string name="label_price">Price:</string>
+    <string name="label_total">Total:</string>
+    <string name="button_remove_item">Remove Item</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_enter_quantity">Enter quantity</string>
+    <string name="toast_invalid_quantity">Invalid quantity</string>
+    <string name="toast_selected_rice_bag_not_found">Selected rice bag not found</string>
+    <string name="toast_insufficient_stock_available">Insufficient stock available</string>
+    <string name="toast_added_to_cart">Added to cart</string>
+    <string name="toast_updated_quantity_in_cart">Updated quantity in cart</string>
+    <string name="toast_insufficient_stock_to_add_more">Insufficient stock to add more</string>
+    <string name="toast_cart_empty">Cart is empty</string>
+    <string name="toast_selected_shop_not_found">Selected shop not found</string>
+    <string name="toast_rice_bag_not_found">Rice bag %1$s not found</string>
+    <string name="toast_error_fetching_shops">Error fetching shops: %1$s</string>
+    <string name="toast_error_fetching_loaded_rice_bags">Error fetching loaded rice bags: %1$s</string>
+    <string name="toast_error_issuing_rice_bags">Error issuing rice bags: %1$s</string>
+    <string name="toast_error_creating_bill">Error creating bill: %1$s</string>
+    <string name="toast_bill_sent_to_printer">Bill sent to printer</string>
+    <string name="toast_report_sent_to_printer">Report sent to printer</string>
+    <string name="toast_printer_connection_failed">Printer connection failed: %1$s</string>
+    <string name="toast_error_encoding_text">Error encoding text: %1$s</string>
+    <string name="toast_no_paired_printer_found">No paired Bluetooth printer found</string>
+    <string name="toast_printer_not_found">Printer with MAC %1$s not found</string>
+    <string name="toast_permissions_required">Bluetooth and Location permissions are required to print.</string>
+
+    <!-- PrinterHelper Messages -->
+    <string name="printer_thank_you">Thank you!</string>
+    <string name="printer_rice_mill_management">Rice Mill Management</string>
+
+    <!-- Additional UI Labels and Messages -->
+    <string name="label_order_details">Order Details:</string>
+    <string name="label_shop_name">Shop:</string>
+    <string name="label_shop_address">Address:</string>
+    <string name="label_shop_contact">Contact:</string>
+    <string name="label_order_id">Order ID:</string>
+    <string name="label_rice_bag">Rice Bag:</string>
+    <string name="label_quantity">Quantity:</string>
+    <string name="label_total_price">Total Price:</string>
+    <string name="label_delivery_status">Delivery Status:</string>
+    <string name="label_order_date">Order Date:</string>
+    <string name="label_total_amount">Total Amount:</string>
+
+
+    <string name="toast_error_loading_rice_bags">Error loading rice bags: %1$s</string>
+    <string name="toast_error_loading_loaded_lorries">Error loading loaded lorries: %1$s</string>
+
+    <!-- Placeholder for dynamic content -->
+    <string name="placeholder_order_date">dd/MM/yyyy</string>
+
+    <!-- Error Descriptions -->
+    <string name="error_no_paired_printer">No paired Bluetooth printer found. Please pair a printer and try again.</string>
+
+    <!-- Miscellaneous -->
+    <string name="format_currency">$%1$.2f</string>
+
+
+    <string name="select_payment_method">Select Payment Method:</string>
+    <string name="cash">Cash</string>
+    <string name="cheque">Cheque</string>
+    <string name="credit">Credit</string>
+    <string name="select_rice_bag_size">Select Rice Bag Size</string>
+    <string name="enter_quantity">Enter Quantity</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="issue_all">Issue All</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_success_creating_bill">Bill created successfully.</string>
+    <string name="toast_error_sending_whatsapp">Error sending bill via WhatsApp: %1$s</string>
+    <string name="toast_whatsapp_not_installed">WhatsApp is not installed on this device.</string>
+
+    <!-- Dialog Titles and Options -->
+    <string name="dialog_title_choose_option">Choose an option</string>
+    <string name="option_print_bill">Print Bill</string>
+    <string name="option_send_via_whatsapp">Send via WhatsApp</string>
+    <string name="enter_bank_name">Enter Bank Name</string>
+    <string name="enter_cheque_number">Enter Cheque Number</string>
+    <string name="enter_credit_term_days">Enter Credit Term Days</string>
+    <string name="add_shop">Add Shop</string>
+
+    <string-array name="report_types">
+        <item>Daily Sales</item>
+        <item>Monthly Sales</item>
+        <item>Inventory Report</item>
+        <item>Lorry Loading Report</item>
+        <item>Shop Performance</item>
+    </string-array>
+</resources>

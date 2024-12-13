@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/editTextPaymentAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Payment Amount"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/textViewSelectPaymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Payment Method:"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/radioCash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash" />
+
+            <RadioButton
+                android:id="@+id/radioCheque"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cheque"
+                android:layout_marginStart="16dp" />
+
+            <RadioButton
+                android:id="@+id/radioCredit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit"
+                android:layout_marginStart="16dp" />
+        </RadioGroup>
+
+        <!-- Cheque Details -->
+        <LinearLayout
+            android:id="@+id/layoutChequeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/editTextChequeNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Cheque Number"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextBankName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Bank Name"
+                android:inputType="text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Credit Details -->
+        <LinearLayout
+            android:id="@+id/layoutCreditDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/editTextCreditTerm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Credit Term (Days)"
+                android:inputType="number" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

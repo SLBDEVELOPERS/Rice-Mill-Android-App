@@ -1,0 +1,15 @@
+<!-- res/drawable/ic_sort_alpha.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="@color/colorOnSurface"
+        android:pathData="M4,7h4v2H6v6h2v2H4V7z
+                      M10,7h14v2H10v6h10v2h-14V7z
+                      M10,15h14v2H10v-2z
+                      M10,19h14v2H10v-2z"/>
+
+</vector>

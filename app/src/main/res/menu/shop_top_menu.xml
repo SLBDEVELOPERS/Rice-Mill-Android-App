@@ -1,0 +1,27 @@
+<!-- res/menu/shop_top_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Search Option -->
+    <item
+        android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <!-- Sort by Name -->
+    <item
+        android:id="@+id/action_sort_name"
+        android:title="Sort by Name"
+        android:icon="@drawable/ic_sort_alpha"
+        app:showAsAction="never" />
+
+    <!-- Sort by Outstanding Due -->
+    <item
+        android:id="@+id/action_sort_due"
+        android:title="Sort by Outstanding Due"
+        android:icon="@drawable/ic_sort_money"
+        app:showAsAction="never" />
+
+</menu>

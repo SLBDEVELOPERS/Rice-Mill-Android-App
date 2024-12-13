@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "943519799055",
+    "project_id": "sagara-rice-mill",
+    "storage_bucket": "sagara-rice-mill.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943519799055:android:b2d19c886952982bf5107a",
+        "android_client_info": {
+          "package_name": "com.example.sagararicemill"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9Ktv_RLPno980TVG27JjL-nL1J0bdfBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

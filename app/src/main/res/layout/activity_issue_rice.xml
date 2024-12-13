@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spinnerShops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/select_shop" />
+
+        <!-- Display outstanding due for the selected shop -->
+        <TextView
+            android:id="@+id/textViewShopDue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Outstanding Due: Rs 0"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"/>
+
+        <Spinner
+            android:id="@+id/spinnerLoadedRiceBags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/select_rice_bag_size"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/textViewAvailableStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Available Stock: N/A"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+        <EditText
+            android:id="@+id/editTextLoadQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_quantity"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
+
+        <!-- Payment Method Selection -->
+        <TextView
+            android:id="@+id/textViewPaymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_payment_method"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/radioCash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cash" />
+
+            <RadioButton
+                android:id="@+id/radioCheque"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cheque"
+                android:layout_marginStart="16dp" />
+
+            <RadioButton
+                android:id="@+id/radioCredit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/credit"
+                android:layout_marginStart="16dp" />
+        </RadioGroup>
+
+        <!-- Cheque Details -->
+        <LinearLayout
+            android:id="@+id/layoutChequeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/editTextChequeNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_cheque_number"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextBankName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_bank_name"
+                android:inputType="text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Credit Details -->
+        <LinearLayout
+            android:id="@+id/layoutCreditDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/editTextCreditTerm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_credit_term_days"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editTextAdvancePaid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Advance Paid (optional)"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonAddToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_cart"
+            android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Display Dynamic Totals -->
+        <TextView
+            android:id="@+id/textViewCartTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: Rs 0.00"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/buttonIssueAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/issue_all"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

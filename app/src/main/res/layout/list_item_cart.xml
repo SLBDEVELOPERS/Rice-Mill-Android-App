@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textViewCartSize"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Size: 5kg"
+            android:textSize="16sp"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/textViewCartPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Price: \$100"
+            android:textSize="16sp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/buttonRemoveCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Remove Item" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/editTextCartQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:inputType="number"
+            android:padding="8dp"
+            android:background="@drawable/edit_text_bg"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textViewCartTotalPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Total: \$500"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="end" />
+    </LinearLayout>
+</LinearLayout>
