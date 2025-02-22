@@ -443,8 +443,10 @@ class DashboardFragment : Fragment() {
 
 
     private fun setupPieChart(entries: List<PieEntry>) {
+        Log.d(TAG, "setupPieChart: " + entries.size);
         val dataSet = PieDataSet(entries, "Sales by Rice Bag Size")
-        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList() // Set colors
+        val colors = List(entries.size) { Color.rgb((0..255).random(), (0..255).random(), (0..255).random()) }
+        dataSet.colors = colors
         dataSet.valueTextColor = Color.BLACK
         dataSet.valueTextSize = 12f
 
