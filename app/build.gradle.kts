@@ -67,6 +67,7 @@ dependencies {
     // Kotlin Coroutines (optional for asynchronous tasks)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     // Add other necessary dependencies
 
 }

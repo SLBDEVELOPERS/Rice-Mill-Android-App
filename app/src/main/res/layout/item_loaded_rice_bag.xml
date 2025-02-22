@@ -8,58 +8,39 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
-    <View
-        android:id="@+id/viewLowStockIndicator"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
-        android:layout_gravity="end|top"
-        android:background="@drawable/low_stock_indicator"
-        android:visibility="gone"
-        android:layout_margin="8dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Rice Bag Name -->
+        <!-- Rice Bag Name and Size -->
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textViewLoadedNameSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name: Basmati"
-            android:textSize="18sp"
+            android:text="Name: Basmati - 5kg"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/colorOnSurface" />
 
-        <!-- Rice Bag Size -->
+        <!-- Quantity Loaded -->
         <TextView
-            android:id="@+id/textViewSize"
+            android:id="@+id/textViewLoadedQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Size: 5kg"
-            android:textSize="16sp"
+            android:text="Quantity: 50"
+            android:textSize="14sp"
             android:textColor="@color/colorOnSurface"
             android:layout_marginTop="4dp" />
 
-        <!-- Rice Bag Price -->
+        <!-- Price per Unit -->
         <TextView
-            android:id="@+id/textViewPrice"
+            android:id="@+id/textViewLoadedPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: \$100.00"
-            android:textSize="16sp"
-            android:textColor="@color/colorOnSurface"
-            android:layout_marginTop="4dp" />
-
-        <!-- Rice Bag Stock -->
-        <TextView
-            android:id="@+id/textViewStock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stock: 50"
-            android:textSize="16sp"
+            android:text="Price per Unit: \$100.00"
+            android:textSize="14sp"
             android:textColor="@color/colorOnSurface"
             android:layout_marginTop="4dp" />
 

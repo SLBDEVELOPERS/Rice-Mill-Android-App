@@ -43,10 +43,10 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(homeFragment)
                     true
                 }
-                R.id.navigation_issue_rice -> {
-                    loadFragment(issueRiceFragment)
-                    true
-                }
+//                R.id.navigation_issue_rice -> {
+//                    loadFragment(issueRiceFragment)
+//                    true
+//                }
                 R.id.navigation_outstanding_bills -> {
                     loadFragment(outstandingBillsFragment)
                     true

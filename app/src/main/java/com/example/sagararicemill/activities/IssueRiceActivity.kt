@@ -481,7 +481,7 @@ class IssueRiceActivity : AppCompatActivity() {
             .setTitle("Choose Option")
             .setItems(options) { _, which ->
                 when (which) {
-                    0 -> printerHelper.printBillMultiOrder(shop, orderList, bill)
+                    0 -> printerHelper.printBill(shop, orderList, bill)
                     1 -> sendBillViaWhatsApp(shop, orderList, bill)
                 }
             }

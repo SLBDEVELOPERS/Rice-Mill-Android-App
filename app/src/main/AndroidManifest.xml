@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SagaraRiceMill"
+        android:theme="@style/Base.Theme.SagaraRiceMill"
         tools:targetApi="31">
         <activity
             android:name=".activities.BillListActivity"
@@ -53,7 +53,6 @@
             </intent-filter>
         </activity> <!-- Other Activities -->
         <activity android:name=".activities.IssueRiceActivity" />
-        <activity android:name=".activities.OutstandingBillsActivity" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.AddEditRiceBagActivity" />

@@ -66,6 +66,19 @@ class BillAdapter(
             onMakePaymentClick(bill)
         }
 
+        val buttonMarkChequeReturned = view.findViewById<Button>(R.id.buttonMarkChequeReturned)
+
+        // Show "Mark Cheque as Returned" button only for cheque payments
+        if (bill.paymentMethod == "Cheque" && bill.paymentStatus != "Paid") {
+            buttonMarkChequeReturned.visibility = View.VISIBLE
+            buttonMarkChequeReturned.setOnClickListener {
+                //onMarkChequeReturned(bill)
+            }
+        } else {
+            buttonMarkChequeReturned.visibility = View.GONE
+        }
+
+
         return view
     }
 }

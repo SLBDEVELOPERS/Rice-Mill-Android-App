@@ -9,6 +9,7 @@ data class Bill(
     var billDate: Timestamp? = null,
     var paymentMethod: String = "",      // Existing field
     var paymentStatus: String = "Unpaid",// Existing field: Paid, Unpaid, Partially Paid
+    var chequeStatus: String = "Pending",
     var dueDate: Timestamp? = null,      // Existing field: applicable for Credit and Cheque
     var paymentDetails: PaymentDetails? = null, // Existing field: additional payment info
     var paidAmount: Double = 0.0,        // New field: Total amount paid
@@ -21,6 +22,7 @@ data class Bill(
             "billDate" to billDate!!,
             "paymentMethod" to paymentMethod,
             "paymentStatus" to paymentStatus,
+            "chequeStatus" to chequeStatus,
             "paidAmount" to paidAmount,
             "paymentHistory" to paymentHistory.map { it.toMap() }
         )

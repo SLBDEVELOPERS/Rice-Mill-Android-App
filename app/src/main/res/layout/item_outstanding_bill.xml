@@ -54,14 +54,36 @@
         android:textSize="14sp"
         android:layout_marginTop="4dp" />
 
-    <Button
-        android:id="@+id/buttonMakePayment"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Make Payment"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonMakePayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settle Payment"
+            android:textAllCaps="false"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/buttonMarkChequeReturned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:layout_marginLeft="12dp"
+            android:text="Mark Cheque as Returned"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/orange"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/buttonToggleHistory"
@@ -69,6 +91,7 @@
         android:layout_height="wrap_content"
         android:text="Show Payment History"
         android:layout_marginTop="8dp"
+        android:textAllCaps="false"
         android:backgroundTint="@color/colorSecondary"
         android:textColor="@android:color/white" />
 

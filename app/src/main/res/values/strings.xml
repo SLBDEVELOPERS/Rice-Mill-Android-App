@@ -95,6 +95,7 @@
     <string name="enter_cheque_number">Enter Cheque Number</string>
     <string name="enter_credit_term_days">Enter Credit Term Days</string>
     <string name="add_shop">Add Shop</string>
+    <string name="add_rice_bag">add rice bag</string>
 
     <string-array name="report_types">
         <item>Daily Sales</item>

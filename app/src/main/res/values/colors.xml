@@ -18,26 +18,52 @@
     <color name="teal_700">#060E3E</color>
     <color name="purple_700">#6115EA</color>
 
-    <color name="md_theme_light_primary">#6200EE</color>
-    <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#BB86FC</color>
-    <color name="md_theme_light_onPrimaryContainer">#000000</color>
+<!--    <color name="md_theme_light_primary">#6200EE</color>-->
+<!--    <color name="md_theme_light_onPrimary">#FFFFFF</color>-->
+<!--    <color name="md_theme_light_primaryContainer">#BB86FC</color>-->
+<!--    <color name="md_theme_light_onPrimaryContainer">#000000</color>-->
 
-    <color name="md_theme_light_secondary">#03DAC5</color>
-    <color name="md_theme_light_onSecondary">#000000</color>
-    <color name="md_theme_light_secondaryContainer">#66FFF7</color>
-    <color name="md_theme_light_onSecondaryContainer">#000000</color>
+<!--    <color name="md_theme_light_secondary">#03DAC5</color>-->
+<!--    <color name="md_theme_light_onSecondary">#000000</color>-->
+<!--    <color name="md_theme_light_secondaryContainer">#66FFF7</color>-->
+<!--    <color name="md_theme_light_onSecondaryContainer">#000000</color>-->
 
-    <color name="md_theme_light_background">#FFFFFF</color>
-    <color name="md_theme_light_onBackground">#000000</color>
-    <color name="md_theme_light_surface">#FFFFFF</color>
-    <color name="md_theme_light_onSurface">#000000</color>
+<!--    <color name="md_theme_light_background">#FFFFFF</color>-->
+<!--    <color name="md_theme_light_onBackground">#000000</color>-->
+<!--    <color name="md_theme_light_surface">#FFFFFF</color>-->
+<!--    <color name="md_theme_light_onSurface">#000000</color>-->
 
-    <color name="md_theme_light_error">#B00020</color>
-    <color name="md_theme_light_onError">#FFFFFF</color>
+<!--    <color name="md_theme_light_error">#B00020</color>-->
+<!--    <color name="md_theme_light_onError">#FFFFFF</color>-->
 
     <!-- Surface colors -->
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>
 
+    <!-- Error colors -->
+    <color name="colorError">#B00020</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+
+    <color name="blue">#007BFF</color>
+    <color name="teal">#20C997</color>
+    <color name="purple">#6F42C1</color>
+    <color name="red">#DC3545</color>
+
+
+
+    <color name="md_theme_light_primary">#6200EE</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#3700B3</color>
+    <color name="md_theme_light_onPrimaryContainer">#FFFFFF</color>
+    <color name="md_theme_light_secondary">#03DAC6</color>
+    <color name="md_theme_light_onSecondary">#000000</color>
+    <color name="md_theme_light_secondaryContainer">#018786</color>
+    <color name="md_theme_light_onSecondaryContainer">#FFFFFF</color>
+    <color name="md_theme_light_background">#FFFFFF</color>
+    <color name="md_theme_light_onBackground">#000000</color>
+    <color name="md_theme_light_surface">#FFFFFF</color>
+    <color name="md_theme_light_onSurface">#000000</color>
+    <color name="md_theme_light_error">#B00020</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
 </resources>

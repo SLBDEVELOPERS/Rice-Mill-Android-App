@@ -470,7 +470,7 @@ class IssueRiceFragment : Fragment() {
                 when (which) {
                     0 -> {
                         // Print the bill
-                        printerHelper.printBillMultiOrder(shop, orderList, bill)
+                        printerHelper.printBill(shop, orderList, bill)
                     }
                     1 -> {
                         // Send via WhatsApp

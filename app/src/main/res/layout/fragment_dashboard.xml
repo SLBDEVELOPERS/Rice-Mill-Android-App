@@ -193,6 +193,24 @@
             android:layout_height="200dp"
             android:layout_marginBottom="16dp" />
 
+
+        <!-- Pie Chart Section -->
+        <TextView
+            android:id="@+id/textViewPieChartLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sales by Rice Bag Size"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp" />
+
+
         <!-- Top Shops Section -->
         <TextView
             android:id="@+id/textViewTopShopsLabel"

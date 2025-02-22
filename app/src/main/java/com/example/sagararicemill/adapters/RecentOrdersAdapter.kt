@@ -33,7 +33,7 @@ class RecentOrdersAdapter(
     override fun onBindViewHolder(holder: RecentOrdersViewHolder, position: Int) {
         val order = orders[position]
         holder.textViewOrderId.text = "Order ID: ${order.id}"
-        holder.textViewShopId.text = "Shop ID: ${order.shopId}"
+        holder.textViewShopId.text = "Shop: ${order.shopName}"
         holder.textViewAmount.text = "Amount: Rs ${String.format("%.2f", order.totalPrice)}"
         holder.textViewOrderDate.text = "Date: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
             order.orderDate!!.toDate())}"

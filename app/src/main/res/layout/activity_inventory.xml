@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayoutInventory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.InventoryActivity">
+    android:background="@color/colorBackground">
 
-    <Button
-        android:id="@+id/buttonAddRiceBag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Rice Bag"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@android:color/white" />
+    <!-- Material Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBarInventory"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:title="Inventory"
+        android:titleTextColor="@color/colorOnPrimary"
+        app:layout_scrollFlags="scroll|enterAlways" />
 
-    <ListView
-        android:id="@+id/listViewInventory"
+    <!-- RecyclerView for Rice Bags -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewInventory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/buttonAddRiceBag"
-        android:padding="16dp" />
-</RelativeLayout>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- Floating Action Button to Add Rice Bag -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddRiceBag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_rice_bag"
+        android:src="@drawable/ic_add"
+        app:tint="@color/colorOnSecondary"
+        app:backgroundTint="@color/colorSecondary"
+        app:layout_anchor="@id/recyclerViewInventory"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

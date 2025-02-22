@@ -15,15 +15,27 @@ import com.example.sagararicemill.R
 import com.example.sagararicemill.adapters.RecentOrdersAdapter
 import com.example.sagararicemill.adapters.StockLevelsAdapter
 import com.example.sagararicemill.adapters.TopShopsAdapter
-import com.example.sagararicemill.models.*
+import com.example.sagararicemill.models.Bill
+import com.example.sagararicemill.models.Order
+import com.example.sagararicemill.models.RiceBag
+import com.example.sagararicemill.models.Shop
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 data class TopShopInfo(
     val name: String,
@@ -44,6 +56,8 @@ class DashboardFragment : Fragment() {
     private lateinit var recyclerViewTopShops: RecyclerView
 
     private lateinit var lineChartSalesTrend: LineChart
+
+    private lateinit var pieChart: PieChart
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -79,6 +93,8 @@ class DashboardFragment : Fragment() {
         recyclerViewStockLevels.adapter = StockLevelsAdapter(requireContext(), stockLevels)
         recyclerViewTopShops.adapter = TopShopsAdapter(requireContext(), topShops)
 
+        pieChart = view.findViewById(R.id.pieChart)
+
         // Fetch and Display Data
         fetchTotalSales()
         fetchOutstandingPayments()
@@ -87,6 +103,7 @@ class DashboardFragment : Fragment() {
         fetchStockLevels()
         fetchTopShopsLast30Days()
         fetchLast7DaysSalesTrend()
+        fetchPieChartData()
 
         return view
     }
@@ -106,7 +123,11 @@ class DashboardFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error fetching total sales: ", exception)
-                Toast.makeText(requireContext(), "Error fetching total sales: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching total sales: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -121,12 +142,17 @@ class DashboardFragment : Fragment() {
                     val remaining = bill.amount - bill.paidAmount
                     outstandingPayments += remaining
                 }
-                textViewOutstandingPayments.text = "Rs ${String.format("%.2f", outstandingPayments)}"
+                textViewOutstandingPayments.text =
+                    "Rs ${String.format("%.2f", outstandingPayments)}"
                 Log.d(TAG, "Outstanding Payments: Rs $outstandingPayments")
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error fetching outstanding payments: ", exception)
-                Toast.makeText(requireContext(), "Error fetching outstanding payments: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching outstanding payments: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -148,11 +174,70 @@ class DashboardFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error fetching total orders/AOV: ", exception)
-                Toast.makeText(requireContext(), "Error fetching total orders/AOV: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching total orders/AOV: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
     private fun fetchRecentOrders() {
+        db.collection("orders")
+            .orderBy("orderDate", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .limit(5)
+            .get()
+            .addOnSuccessListener { documents ->
+                recentOrders.clear()
+                val shopIds = mutableListOf<String>()
+                for (document in documents) {
+                    val order = document.toObject(Order::class.java)
+                    order.id = document.id
+                    recentOrders.add(order)
+                    shopIds.add(order.shopId)
+                }
+
+                // Fetch shop names for the orders
+                db.collection("shops").whereIn(FieldPath.documentId(), shopIds).get()
+                    .addOnSuccessListener { shopDocs ->
+                        val shopMap = mutableMapOf<String, String>()
+                        //Log.d(TAG, "Fetched shops: ${shopDocs.documents}")
+                        Log.d(TAG, "fetchRecentOrders: shopIds " + shopIds);
+                        for (shopDoc in shopDocs) {
+                            val shop = shopDoc.toObject(Shop::class.java)
+                            shop.id = shopDoc.id
+                            Log.d(TAG, "Fetched shops: ${shop.id}")
+                            shopMap[shop.id] = shop.name
+                        }
+
+                        // Update recentOrders with shop names
+                        for (order in recentOrders) {
+                            order.shopName = shopMap[order.shopId] ?: "Unknown Shop"
+                        }
+
+                        recyclerViewRecentOrders.adapter?.notifyDataSetChanged()
+                        Log.d(TAG, "Fetched ${recentOrders.size} recent orders with shop names.")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Error fetching shop names: ", e)
+                        Toast.makeText(
+                            requireContext(),
+                            "Error fetching shop names: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error fetching recent orders: ", exception)
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching recent orders: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    /*private fun fetchRecentOrders() {
         db.collection("orders")
             .orderBy("orderDate", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .limit(5)
@@ -171,7 +256,7 @@ class DashboardFragment : Fragment() {
                 Log.e(TAG, "Error fetching recent orders: ", exception)
                 Toast.makeText(requireContext(), "Error fetching recent orders: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
-    }
+    } */
 
     private fun fetchStockLevels() {
         db.collection("rice_bags").get()
@@ -187,7 +272,11 @@ class DashboardFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error fetching stock levels: ", exception)
-                Toast.makeText(requireContext(), "Error fetching stock levels: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching stock levels: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -205,7 +294,8 @@ class DashboardFragment : Fragment() {
                 val shopIdsSet = HashSet<String>()
                 for (doc in documents) {
                     val order = doc.toObject(Order::class.java)
-                    shopSalesMap[order.shopId] = shopSalesMap.getOrDefault(order.shopId, 0.0) + order.totalPrice
+                    shopSalesMap[order.shopId] =
+                        shopSalesMap.getOrDefault(order.shopId, 0.0) + order.totalPrice
                     shopIdsSet.add(order.shopId)
                 }
 
@@ -226,26 +316,42 @@ class DashboardFragment : Fragment() {
                             shopInfoMap[shop.id] = shop
                         }
 
-                        val sortedShops = shopSalesMap.entries.sortedByDescending { it.value }.take(5)
+                        val sortedShops =
+                            shopSalesMap.entries.sortedByDescending { it.value }.take(5)
                         topShops.clear()
                         for (e in sortedShops) {
                             val shopObj = shopInfoMap[e.key]
                             val name = shopObj?.name ?: "Unknown Shop"
                             val address = shopObj?.address
                             val contact = shopObj?.contact
-                            topShops.add(TopShopInfo(name = name, totalSales = e.value, address = address, contact = contact))
+                            topShops.add(
+                                TopShopInfo(
+                                    name = name,
+                                    totalSales = e.value,
+                                    address = address,
+                                    contact = contact
+                                )
+                            )
                         }
                         recyclerViewTopShops.adapter?.notifyDataSetChanged()
                         Log.d(TAG, "Fetched top shops: ${topShops.size}")
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "Error fetching shop names: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Error fetching shop names: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Error fetching top shops: ", e)
-                Toast.makeText(requireContext(), "Error fetching top shops: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching top shops: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -297,7 +403,59 @@ class DashboardFragment : Fragment() {
                 lineChartSalesTrend.description = desc
             }
             .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error fetching sales trend: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching sales trend: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
+
+    private fun fetchPieChartData() {
+        db.collection("orders")
+            .get()
+            .addOnSuccessListener { documents ->
+                val sizeSalesMap =
+                    mutableMapOf<String, Double>() // Map to store sales by rice bag size
+                for (document in documents) {
+                    val order = document.toObject(Order::class.java)
+                    val size = order.size
+                    sizeSalesMap[size] = sizeSalesMap.getOrDefault(size, 0.0) + order.totalPrice
+                }
+
+                // Convert the map to PieChart entries
+                val entries = mutableListOf<PieEntry>()
+                for ((size, totalSales) in sizeSalesMap) {
+                    entries.add(PieEntry(totalSales.toFloat(), size))
+                }
+
+                setupPieChart(entries)
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error fetching pie chart data: ", exception)
+                Toast.makeText(
+                    requireContext(),
+                    "Error fetching pie chart data: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+
+    private fun setupPieChart(entries: List<PieEntry>) {
+        val dataSet = PieDataSet(entries, "Sales by Rice Bag Size")
+        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList() // Set colors
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.valueTextSize = 12f
+
+        val pieData = PieData(dataSet)
+        pieChart.data = pieData
+        pieChart.invalidate()
+
+        // Customize the chart
+        pieChart.description.isEnabled = false
+        pieChart.setEntryLabelColor(Color.BLACK)
+        pieChart.animateY(1000, Easing.EaseInOutQuad)
+    }
+
 }

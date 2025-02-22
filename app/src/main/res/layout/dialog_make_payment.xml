@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Select Payment Method:"
             android:textSize="16sp"
+            android:visibility="gone"
             android:layout_marginTop="16dp" />
 
         <RadioGroup
@@ -29,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:layout_marginTop="8dp">
 
             <RadioButton

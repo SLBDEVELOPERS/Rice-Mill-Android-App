@@ -80,7 +80,7 @@ class OutstandingBillsFragment : Fragment() {
      * Shows a dialog to make a payment on the selected bill.
      */
     private fun showMakePaymentDialog(bill: Bill) {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
         builder.setTitle("Make Payment for Bill ID: ${bill.id}")
 
         val inflater = LayoutInflater.from(requireContext())
@@ -194,6 +194,7 @@ class OutstandingBillsFragment : Fragment() {
         }
 
         builder.create().show()
+
     }
 
     /**
@@ -252,6 +253,56 @@ class OutstandingBillsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error processing payment: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e(TAG, "Error processing payment for Bill ID: ${bill.id}", e)
             }
+    }
+
+
+    private fun markChequeAsReturned(bill: Bill) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Mark Cheque as Returned")
+        builder.setMessage("Are you sure you want to mark this cheque as returned?")
+
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Update the bill status and add to returned_cheques collection
+            val updates = hashMapOf<String, Any>(
+                "paymentStatus" to "Returned",
+                "chequeStatus" to "Returned" // Add a new field to track cheque status
+            )
+
+            db.collection("bills").document(bill.id)
+                .update(updates)
+                .addOnSuccessListener {
+                    // Add the returned cheque to the returned_cheques collection
+                    val returnedCheque = hashMapOf(
+                        "billId" to bill.id,
+                        "shopId" to "bill.shopId",
+                        "shopName" to "bill.shopName",
+                        "amount" to bill.amount,
+                        "chequeNumber" to bill.paymentDetails?.chequeNumber,
+                        "bankName" to bill.paymentDetails?.bankName,
+                        "returnDate" to com.google.firebase.Timestamp(Date()),
+                        "reason" to "Insufficient Funds" // You can allow the user to input a reason
+                    )
+
+                    db.collection("returned_cheques")
+                        .add(returnedCheque)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Cheque marked as returned.", Toast.LENGTH_SHORT).show()
+                            fetchOutstandingBills() // Refresh the list
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(requireContext(), "Error marking cheque as returned: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error updating bill status: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.create().show()
     }
 
 }

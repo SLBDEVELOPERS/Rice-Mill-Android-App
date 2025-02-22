@@ -1,7 +1,11 @@
 package com.example.sagararicemill.utils
 
+import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.dantsu.escposprinter.EscPosPrinter
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.exceptions.EscPosConnectionException
@@ -12,75 +16,54 @@ import com.example.sagararicemill.models.Shop
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class PrinterHelper(private val context: Context) {
 
+    companion object {
+        private const val SHARED_PREFS_NAME = "PrinterPrefs"
+        private const val KEY_PRINTER_MAC = "printer_mac"
+    }
+
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+
     /**
-     * Prints a bill referencing a single order.
+     * Stores the selected printer's MAC address in SharedPreferences.
      *
-     * @param shop The shop to which the bill is issued.
-     * @param order The order details.
-     * @param bill The bill details.
+     * @param macAddress The MAC address of the printer.
      */
-    fun printBill(shop: Shop, order: Order, bill: Bill) {
-        val connection = BluetoothPrintersConnections.selectFirstPaired()
-
-        if (connection == null) {
-            Toast.makeText(context, "No paired Bluetooth printer found", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val printer = EscPosPrinter(
-            connection,
-            203, // DPI
-            48f,  // Paper width in mm
-            32   // Characters per line
-        )
-
-        try {
-            val sb = StringBuilder()
-            sb.append("<C><B>Rice Mill Management</B></C>\n")
-            sb.append("\n")
-            sb.append("<C>Bill ID: ${bill.id}</C>\n")
-            sb.append("<L>Shop: ${shop.name}</L>\n")
-            sb.append("<L>Address: ${shop.address}</L>\n")
-            sb.append("<L>Contact: ${shop.contact}</L>\n")
-            sb.append("\n")
-            sb.append("<B>Order Details:</B>\n")
-            sb.append("Order ID: ${order.id}\n")
-            sb.append("Rice Bag: ${order.riceBagId}\n")
-            sb.append("Quantity: ${order.quantity}\n")
-            sb.append("Total Price: \$${String.format("%.2f", order.totalPrice)}\n")
-            sb.append("Delivery Status: ${order.deliveryStatus}\n")
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            sb.append("Order Date: ${sdf.format(order.orderDate?.toDate())}\n\n")
-            sb.append("<B>Total Amount: \$${String.format("%.2f", bill.amount)}</B>\n")
-            sb.append("\n")
-            sb.append("<C>Thank you!</C>\n")
-
-            printer.printFormattedText(sb.toString())
-            Toast.makeText(context, "Bill sent to printer", Toast.LENGTH_SHORT).show()
-        } catch (e: EscPosConnectionException) {
-            e.printStackTrace()
-            Toast.makeText(context, "Printer connection failed: ${e.message}", Toast.LENGTH_SHORT).show()
-        } catch (e: EscPosEncodingException) {
-            e.printStackTrace()
-            Toast.makeText(context, "Error encoding text: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+    fun savePrinterMacAddress(macAddress: String) {
+        sharedPreferences.edit().putString(KEY_PRINTER_MAC, macAddress).apply()
     }
 
     /**
-     * Prints a bill referencing multiple orders.
+     * Retrieves the stored printer's MAC address from SharedPreferences.
+     *
+     * @return The MAC address of the printer, or null if not found.
+     */
+    fun getPrinterMacAddress(): String? {
+        return sharedPreferences.getString(KEY_PRINTER_MAC, null)
+    }
+
+    /**
+     * Prints a bill using the stored printer's MAC address.
      *
      * @param shop The shop to which the bill is issued.
      * @param orders The list of orders included in the bill.
      * @param bill The bill details.
      */
-    fun printBillMultiOrder(shop: Shop, orders: List<Order>, bill: Bill) {
-        val connection = BluetoothPrintersConnections.selectFirstPaired()
+    fun printBill(shop: Shop, orders: List<Order>, bill: Bill) {
+        val macAddress = getPrinterMacAddress()
+        if (macAddress.isNullOrEmpty()) {
+            Toast.makeText(context, "No printer selected. Please pair a printer first.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val connection = BluetoothPrintersConnections.selectFirstPaired()?.let {
+            if (it.device.address == macAddress) it else null
+        }
 
         if (connection == null) {
-            Toast.makeText(context, "No paired Bluetooth printer found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Printer not found or not paired.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -92,31 +75,8 @@ class PrinterHelper(private val context: Context) {
         )
 
         try {
-            val sb = StringBuilder()
-            sb.append("<C><B>Rice Mill Management</B></C>\n")
-            sb.append("\n")
-            sb.append("<C>Bill ID: ${bill.id}</C>\n")
-            sb.append("<L>Shop: ${shop.name}</L>\n")
-            sb.append("<L>Address: ${shop.address}</L>\n")
-            sb.append("<L>Contact: ${shop.contact}</L>\n")
-            sb.append("\n")
-            sb.append("<B>Order Details:</B>\n")
-
-            for (order in orders) {
-                sb.append("Order ID: ${order.id}\n")
-                sb.append("Rice Bag: ${order.riceBagId}\n")
-                sb.append("Quantity: ${order.quantity}\n")
-                sb.append("Total Price: \$${String.format("%.2f", order.totalPrice)}\n")
-                sb.append("Delivery Status: ${order.deliveryStatus}\n")
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                sb.append("Order Date: ${sdf.format(order.orderDate?.toDate())}\n\n")
-            }
-
-            sb.append("<B>Total Amount: \$${String.format("%.2f", bill.amount)}</B>\n")
-            sb.append("\n")
-            sb.append("<C>Thank you!</C>\n")
-
-            printer.printFormattedText(sb.toString())
+            val billContent = generateBillContent(shop, orders, bill)
+            printer.printFormattedText(billContent)
             Toast.makeText(context, "Bill sent to printer", Toast.LENGTH_SHORT).show()
         } catch (e: EscPosConnectionException) {
             e.printStackTrace()
@@ -124,61 +84,83 @@ class PrinterHelper(private val context: Context) {
         } catch (e: EscPosEncodingException) {
             e.printStackTrace()
             Toast.makeText(context, "Error encoding text: ${e.message}", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "An error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
     /**
-     * Prints a textual report.
+     * Generates the bill content in a printable format.
      *
-     * @param reportContent The content of the report to be printed.
+     * @param shop The shop to which the bill is issued.
+     * @param orders The list of orders included in the bill.
+     * @param bill The bill details.
+     * @return The formatted bill content as a String.
      */
-    fun printReport(reportContent: String) {
-        val connection = BluetoothPrintersConnections.selectFirstPaired()
+    private fun generateBillContent(shop: Shop, orders: List<Order>, bill: Bill): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val billDate = bill.billDate?.toDate()?.let { dateFormat.format(it) } ?: "N/A"
 
-        if (connection == null) {
+        val sb = StringBuilder()
+        sb.append("<C><B>SAGARA RICE MILL</B></C>\n")
+        sb.append("================================\n")
+        sb.append("<C>Date: $billDate</C>\n")
+        sb.append("<C>Bill ID: ${bill.id}</C>\n")
+        sb.append("--------------------------------\n")
+        sb.append("<L>Shop Name: ${shop.name}</L>\n")
+        sb.append("<L>Address: ${shop.address}</L>\n")
+        sb.append("<L>Contact: ${shop.contact}</L>\n")
+        sb.append("================================\n")
+        sb.append("<B>ITEM               QTY   PRICE   TOTAL</B>\n")
+        sb.append("================================\n")
+        for (order in orders) {
+            sb.append(
+                "<L>${order.size.padEnd(18)} ${order.quantity.toString().padEnd(4)} " +
+                        "Rs ${order.price.toString().padEnd(5)} Rs ${order.totalPrice}</L>\n"
+            )
+        }
+        sb.append("================================\n")
+        sb.append("<L>Subtotal: Rs ${"%.2f".format(bill.amount)}</L>\n")
+        sb.append("<L>Discount: Rs ${"%.2f".format(50.0)}</L>\n") // Example discount
+        sb.append("<L>Tax (5%): Rs ${"%.2f".format(bill.amount * 0.05)}</L>\n")
+        sb.append("<L>Transport Fee: Rs ${"%.2f".format(100.0)}</L>\n") // Example transport fee
+        sb.append("--------------------------------\n")
+        sb.append("<B>Grand Total: Rs ${"%.2f".format(bill.amount + (bill.amount * 0.05) + 100.0 - 50.0)}</B>\n")
+        sb.append("================================\n")
+        sb.append("<C>Payment Method: ${bill.paymentMethod}</C>\n")
+        sb.append("--------------------------------\n")
+        sb.append("<C>Thank you for your business!</C>\n")
+        sb.append("================================\n")
+
+        return sb.toString()
+    }
+
+    /**
+     * Pairs a Bluetooth printer and stores its MAC address.
+     */
+    fun pairPrinter() {
+        val pairedPrinters = BluetoothPrintersConnections.selectFirstPaired()
+        if (pairedPrinters == null) {
             Toast.makeText(context, "No paired Bluetooth printer found", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val printer = EscPosPrinter(
-            connection,
-            203, // DPI
-            48f,  // Paper width in mm
-            32   // Characters per line
-        )
-
-        try {
-            printer.printFormattedText(reportContent)
-            Toast.makeText(context, "Report sent to printer", Toast.LENGTH_SHORT).show()
-        } catch (e: EscPosConnectionException) {
-            e.printStackTrace()
-            Toast.makeText(context, "Printer connection failed: ${e.message}", Toast.LENGTH_SHORT).show()
-        } catch (e: EscPosEncodingException) {
-            e.printStackTrace()
-            Toast.makeText(context, "Error encoding text: ${e.message}", Toast.LENGTH_SHORT).show()
+        savePrinterMacAddress(pairedPrinters.device.address)
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
         }
+        Toast.makeText(context, "Printer paired: ${pairedPrinters.device.name}", Toast.LENGTH_SHORT).show()
     }
-
-    /**
-     * Selects a Bluetooth printer by its MAC address.
-     *
-     * @param macAddress The MAC address of the desired printer.
-     * @return The DeviceConnection if found and paired, else null.
-     */
-//    fun selectPrinterByMAC(macAddress: String): EscPosPrinter? {
-//        val device = BluetoothPrintersConnections.getBluetoothPrinters().find { it.address == macAddress }
-//        return if (device != null) {
-//            EscPosPrinter(
-//                BluetoothPrintersConnections.bluetooth(device),
-//                203, // DPI
-//                48f,  // Paper width in mm
-//                32   // Characters per line
-//            )
-//        } else {
-//            Toast.makeText(context, "Printer with MAC $macAddress not found", Toast.LENGTH_SHORT).show()
-//            null
-//        }
-//    }
 }
-
-

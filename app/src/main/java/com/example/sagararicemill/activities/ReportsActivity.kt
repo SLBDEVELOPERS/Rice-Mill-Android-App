@@ -114,22 +114,22 @@ class ReportsActivity : AppCompatActivity() {
 
         buttonGenerateReport.setOnClickListener { generateReport() }
 
-        buttonPrintReport.setOnClickListener {
-            val currentItem = viewPager.currentItem
-            when (currentItem) {
-                0 -> { // Text Report
-                    val content = textReportFragment.getCurrentReportContent()
-                    if (content.isEmpty()) {
-                        Toast.makeText(this, "No report to print", Toast.LENGTH_SHORT).show()
-                    } else {
-                        printerHelper.printReport(content)
-                    }
-                }
-                1 -> printerHelper.printReport("Printing Pie Chart summary...")
-                2 -> printerHelper.printReport("Printing Line Chart summary...")
-                3 -> printerHelper.printReport("Printing Bar Chart summary...")
-            }
-        }
+//        buttonPrintReport.setOnClickListener {
+//            val currentItem = viewPager.currentItem
+//            when (currentItem) {
+//                0 -> { // Text Report
+//                    val content = textReportFragment.getCurrentReportContent()
+//                    if (content.isEmpty()) {
+//                        Toast.makeText(this, "No report to print", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        printerHelper.printReport(content)
+//                    }
+//                }
+//                1 -> printerHelper.printReport("Printing Pie Chart summary...")
+//                2 -> printerHelper.printReport("Printing Line Chart summary...")
+//                3 -> printerHelper.printReport("Printing Bar Chart summary...")
+//            }
+//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

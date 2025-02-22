@@ -9,17 +9,17 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Sale" />
 
-    <item
-        android:id="@+id/navigation_issue_rice"
-        android:icon="@drawable/ic_issue_rice"
-        android:title="Issue Rice" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_issue_rice"-->
+<!--        android:icon="@drawable/ic_issue_rice"-->
+<!--        android:title="Issue Rice" />-->
 
     <item
         android:id="@+id/navigation_outstanding_bills"
         android:icon="@drawable/ic_outstanding_bills"
-        android:title="Outstanding Bills" />
+        android:title="Outstanding" />
 
     <!-- Optional: Add more items like Settings -->
     <!--

@@ -196,7 +196,7 @@ class BillActivity : AppCompatActivity() {
                 if (document != null && document.exists()) {
                     val shop = document.toObject(Shop::class.java)
                     shop?.let {
-                        printerHelper.printBillMultiOrder(it, orders, bill)
+                        printerHelper.printBill(it, orders, bill)
                         Toast.makeText(this, "Bill sent to printer", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -230,7 +230,7 @@ class BillActivity : AppCompatActivity() {
         textViewTotalAmount.text = "Total: Rs %.2f".format(totalAmount)
 
         buttonPrintBill.setOnClickListener {
-            printerHelper.printBillMultiOrder(shop, orders, bill)
+            printerHelper.printBill(shop, orders, bill)
             Toast.makeText(this, "Bill sent to printer", Toast.LENGTH_SHORT).show()
         }
     }

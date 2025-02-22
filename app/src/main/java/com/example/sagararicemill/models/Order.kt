@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp
 data class Order(
     var id: String = "",
     var shopId: String = "",
+    var shopName: String = "",
     var riceBagId: String = "",
     var size: String = "",
     var price: Double = 0.0,
