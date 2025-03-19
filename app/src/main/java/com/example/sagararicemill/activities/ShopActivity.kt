@@ -34,6 +34,9 @@ class ShopActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewShops)
         fabAddShop = findViewById(R.id.fabAddShop)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Setup RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         shopAdapter = ShopAdapter(
@@ -150,5 +153,10 @@ class ShopActivity : AppCompatActivity() {
     private fun sortShopsByDue() {
         val sortedList = shopList.sortedByDescending { it.outstandingDue }
         shopAdapter.updateList(sortedList)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed() // Navigate back when arrow is clicked
+        return true
     }
 }

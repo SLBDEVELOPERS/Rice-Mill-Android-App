@@ -1,0 +1,109 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dark application theme -->
+    <style name="Base.Theme.SagaraRiceMill.Dark" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+        <!-- Primary colors -->
+        <item name="colorPrimary">#6B3E1B</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#4A2A12</item>
+        <item name="colorOnPrimaryContainer">#D9BFA1</item>
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">#3D5A27</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#2A3B1A</item>
+        <item name="colorOnSecondaryContainer">#B8CDA5</item>
+
+        <!-- Background and surface -->
+        <item name="android:colorBackground">#1C2526</item>
+        <item name="colorOnBackground">#C7CBCC</item>
+        <item name="colorSurface">#2A3233</item>
+        <item name="colorOnSurface">#C7CBCC</item>
+
+        <!-- Error colors -->
+        <item name="colorError">#CF6679</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!-- Explicit text color overrides -->
+        <item name="android:textColorPrimary">#C7CBCC</item>
+        <item name="android:textColorSecondary">#B8CDA5</item>
+        <item name="android:textColor">#C7CBCC</item>
+
+        <!-- Theme components -->
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.SagaraRiceMill.Dark.Headline.Large</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.SagaraRiceMill.Dark.Headline.Medium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.SagaraRiceMill.Dark.Headline.Small</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.SagaraRiceMill.Dark.Body.Large</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.SagaraRiceMill.Dark.Body.Medium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.SagaraRiceMill.Dark.Body.Small</item>
+        <item name="materialButtonStyle">@style/Widget.SagaraRiceMill.Dark.Button</item>
+        <item name="textInputStyle">@style/Widget.SagaraRiceMill.Dark.TextInputLayout</item>
+        <item name="android:windowBackground">#1C2526</item>
+        <item name="android:statusBarColor">#2A3233</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Typography -->
+    <style name="TextAppearance.SagaraRiceMill.Dark.Headline.Large" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#D9BFA1</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.SagaraRiceMill.Dark.Headline.Medium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#D9BFA1</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.SagaraRiceMill.Dark.Headline.Small" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#D9BFA1</item>
+    </style>
+
+    <style name="TextAppearance.SagaraRiceMill.Dark.Body.Large" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#C7CBCC</item>
+    </style>
+
+    <style name="TextAppearance.SagaraRiceMill.Dark.Body.Medium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#C7CBCC</item>
+    </style>
+
+    <style name="TextAppearance.SagaraRiceMill.Dark.Body.Small" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#C7CBCC</item>
+    </style>
+
+    <!-- Button styles -->
+    <style name="Widget.SagaraRiceMill.Dark.Button" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">#6B3E1B</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+    <!-- TextInputLayout styles -->
+    <style name="Widget.SagaraRiceMill.Dark.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#3D5A27</item>
+        <item name="hintTextColor">#B8CDA5</item>
+        <item name="android:textColorHint">#B8CDA5</item>
+        <item name="android:textColor">#C7CBCC</item>
+        <item name="boxBackgroundColor">#2A3233</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="AlertDialogTheme.Dark" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonStyle.Dark</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonStyle.Dark</item>
+        <item name="android:background">#2A3233</item>
+    </style>
+
+    <style name="DialogButtonStyle.Dark" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">#D9BFA1</item>
+    </style>
+</resources>

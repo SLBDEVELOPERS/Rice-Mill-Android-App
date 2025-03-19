@@ -1,117 +1,101 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme -->
+    <!-- Base application theme (Light) -->
     <style name="Base.Theme.SagaraRiceMill" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
 
-        <!-- Primary and secondary colors -->
-        <item name="colorPrimary">@color/md_theme_light_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <!-- Primary colors (rice husk) -->
+        <item name="colorPrimary">#8D5524</item> <!-- Rich brown -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- White -->
+        <item name="colorPrimaryContainer">#E6C9A8</item> <!-- Light beige -->
+        <item name="colorOnPrimaryContainer">#3C210A</item> <!-- Darker brown -->
 
-        <item name="colorSecondary">@color/md_theme_light_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <!-- Secondary colors (rice fields) -->
+        <item name="colorSecondary">#5A7F3D</item> <!-- Forest green -->
+        <item name="colorOnSecondary">#FFFFFF</item> <!-- White -->
+        <item name="colorSecondaryContainer">#C8DDB5</item> <!-- Pale green -->
+        <item name="colorOnSecondaryContainer">#2A3B1A</item> <!-- Dark green -->
 
-        <!-- Background and surface colors -->
-        <item name="android:colorBackground">@color/md_theme_light_background</item>
-        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/md_theme_light_surface</item>
-        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <!-- Background and surface -->
+        <item name="android:colorBackground">#A3998C</item> <!-- Off-white -->
+        <item name="colorOnBackground">#2A2E2F</item> <!-- Softer dark gray -->
+        <item name="colorSurface">#D5D2D2</item> <!-- Pure white -->
+        <item name="colorOnSurface">#2A2E2F</item> <!-- Softer dark gray -->
 
         <!-- Error colors -->
-        <item name="colorError">@color/md_theme_light_error</item>
-        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorError">#B3261E</item> <!-- Deep red -->
+        <item name="colorOnError">#FFFFFF</item> <!-- White -->
 
-        <!-- Typography -->
+        <!-- Theme components -->
         <item name="textAppearanceHeadlineLarge">@style/TextAppearance.SagaraRiceMill.Headline.Large</item>
         <item name="textAppearanceHeadlineMedium">@style/TextAppearance.SagaraRiceMill.Headline.Medium</item>
         <item name="textAppearanceHeadlineSmall">@style/TextAppearance.SagaraRiceMill.Headline.Small</item>
         <item name="textAppearanceBodyLarge">@style/TextAppearance.SagaraRiceMill.Body.Large</item>
         <item name="textAppearanceBodyMedium">@style/TextAppearance.SagaraRiceMill.Body.Medium</item>
         <item name="textAppearanceBodySmall">@style/TextAppearance.SagaraRiceMill.Body.Small</item>
-
-        <!-- Button styles -->
         <item name="materialButtonStyle">@style/Widget.SagaraRiceMill.Button</item>
-<!--        <item name="materialButtonOutlinedStyle">@style/Widget.SagaraRiceMill.Button.Outlined</item>-->
-
-        <!-- Input field styles -->
         <item name="textInputStyle">@style/Widget.SagaraRiceMill.TextInputLayout</item>
-
-        <!-- Window background -->
-        <item name="android:windowBackground">@color/md_theme_light_background</item>
-        <item name="android:statusBarColor">@color/md_theme_light_surface</item>
+        <item name="android:windowBackground">#F8F1E9</item>
+        <item name="android:statusBarColor">#8D5524</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Typography -->
     <style name="TextAppearance.SagaraRiceMill.Headline.Large" parent="TextAppearance.Material3.HeadlineLarge">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#3C210A</item> <!-- Darker brown -->
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextAppearance.SagaraRiceMill.Headline.Medium" parent="TextAppearance.Material3.HeadlineMedium">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#3C210A</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextAppearance.SagaraRiceMill.Headline.Small" parent="TextAppearance.Material3.HeadlineSmall">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#3C210A</item>
     </style>
 
     <style name="TextAppearance.SagaraRiceMill.Body.Large" parent="TextAppearance.Material3.BodyLarge">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#2A2E2F</item> <!-- Softer dark gray -->
     </style>
 
     <style name="TextAppearance.SagaraRiceMill.Body.Medium" parent="TextAppearance.Material3.BodyMedium">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#2A2E2F</item>
     </style>
 
     <style name="TextAppearance.SagaraRiceMill.Body.Small" parent="TextAppearance.Material3.BodySmall">
-<!--        <item name="fontFamily">@font/roboto</item>-->
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textColor">#2A2E2F</item>
     </style>
 
     <!-- Button styles -->
     <style name="Widget.SagaraRiceMill.Button" parent="Widget.Material3.Button">
-        <item name="android:backgroundTint">@color/md_theme_light_primary</item>
-        <item name="android:textColor">@color/md_theme_light_onPrimary</item>
-        <item name="cornerRadius">8dp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:backgroundTint">#8D5524</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="elevation">2dp</item>
     </style>
-
-<!--    <style name="Widget.SagaraRiceMill.Button.Outlined" parent="Widget.Material3.Button.Outlined">-->
-<!--        <item name="android:backgroundTint">@android:color/transparent</item>-->
-<!--        <item name="android:textColor">@color/md_theme_light_primary</item>-->
-<!--        <item name="strokeColor">@color/md_theme_light_primary</item>-->
-<!--        <item name="cornerRadius">8dp</item>-->
-<!--        <item name="android:padding">12dp</item>-->
-<!--    </style>-->
 
     <!-- TextInputLayout styles -->
     <style name="Widget.SagaraRiceMill.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/md_theme_light_primary</item>
-        <item name="hintTextColor">@color/md_theme_light_primary</item>
-        <item name="android:textColorHint">@color/md_theme_light_primary</item>
-        <item name="android:textColor">@color/md_theme_light_onBackground</item>
-        <item name="cornerRadius">8dp</item>
+        <item name="boxStrokeColor">#5A7F3D</item>
+        <item name="hintTextColor">#5A7F3D</item>
+        <item name="android:textColorHint">#5A7F3D</item>
+        <item name="android:textColor">#2A2E2F</item>
+        <item name="boxBackgroundColor">#FFFFFF</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="boxStrokeWidth">2dp</item>
     </style>
-
 
     <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/DialogButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/DialogButtonStyle</item>
+        <item name="android:background">#F8F1E9</item>
     </style>
 
     <style name="DialogButtonStyle" parent="Widget.Material3.Button.TextButton">

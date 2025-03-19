@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sagararicemill.R
 import com.example.sagararicemill.adapters.BillAdapter
 import com.example.sagararicemill.models.Bill
@@ -33,29 +31,19 @@ class OutstandingBillsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_outstanding_bills, container, false)
 
-        // Initialize UI components
         listViewOutstandingBills = view.findViewById(R.id.listViewOutstandingBills)
 
-        // Initialize Adapter
-        billAdapter = BillAdapter(requireContext(), outstandingBills) { bill ->
-            showMakePaymentDialog(bill)
-        }
+        billAdapter = BillAdapter(requireContext(),outstandingBills, onMakePaymentClick = { bill -> showMakePaymentDialog(bill) },onMarkChequeReturned = { bill -> markChequeAsReturned(bill) })
         listViewOutstandingBills.adapter = billAdapter
 
-        // Fetch Outstanding Bills
         fetchOutstandingBills()
 
         return view
     }
 
-    /**
-     * Fetches bills with paymentStatus as "Unpaid" or "Partially Paid".
-     */
     private fun fetchOutstandingBills() {
         db.collection("bills")
             .whereIn("paymentStatus", listOf("Unpaid", "Partially Paid"))
@@ -76,9 +64,6 @@ class OutstandingBillsFragment : Fragment() {
             }
     }
 
-    /**
-     * Shows a dialog to make a payment on the selected bill.
-     */
     private fun showMakePaymentDialog(bill: Bill) {
         val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
         builder.setTitle("Make Payment for Bill ID: ${bill.id}")
@@ -93,10 +78,8 @@ class OutstandingBillsFragment : Fragment() {
         val radioCheque = view.findViewById<RadioButton>(R.id.radioCheque)
         val radioCredit = view.findViewById<RadioButton>(R.id.radioCredit)
 
-        // Pre-select Cash as default
         radioCash.isChecked = true
 
-        // Show/Hide additional payment details based on selection
         val layoutChequeDetails = view.findViewById<LinearLayout>(R.id.layoutChequeDetails)
         val layoutCreditDetails = view.findViewById<LinearLayout>(R.id.layoutCreditDetails)
 
@@ -113,10 +96,6 @@ class OutstandingBillsFragment : Fragment() {
                 R.id.radioCredit -> {
                     layoutChequeDetails.visibility = View.GONE
                     layoutCreditDetails.visibility = View.VISIBLE
-                }
-                else -> {
-                    layoutChequeDetails.visibility = View.GONE
-                    layoutCreditDetails.visibility = View.GONE
                 }
             }
         }
@@ -135,16 +114,14 @@ class OutstandingBillsFragment : Fragment() {
                 return@setPositiveButton
             }
 
-            // Get selected payment method
             val selectedPaymentMethodId = radioGroupPaymentMethod.checkedRadioButtonId
             val selectedPaymentMethod = when (selectedPaymentMethodId) {
                 R.id.radioCash -> "Cash"
                 R.id.radioCheque -> "Cheque"
                 R.id.radioCredit -> "Credit"
-                else -> "Cash" // Default
+                else -> "Cash"
             }
 
-            // Capture additional payment details
             val paymentDetails = when (selectedPaymentMethod) {
                 "Cheque" -> {
                     val chequeNumber = view.findViewById<EditText>(R.id.editTextChequeNumber).text.toString().trim()
@@ -174,18 +151,13 @@ class OutstandingBillsFragment : Fragment() {
                         return@setPositiveButton
                     }
 
-                    // Calculate new due date
-                    val dueDate = Calendar.getInstance()
-                    dueDate.add(Calendar.DAY_OF_YEAR, creditTermDays)
-
                     PaymentDetails(
                         creditTermDays = creditTermDays
                     )
                 }
-                else -> null // Cash does not require additional details
+                else -> null
             }
 
-            // Process the payment
             processPayment(bill, paymentAmount, selectedPaymentMethod, paymentDetails)
         }
 
@@ -194,43 +166,34 @@ class OutstandingBillsFragment : Fragment() {
         }
 
         builder.create().show()
-
     }
 
-    /**
-     * Processes the payment by updating the bill in Firestore.
-     */
     private fun processPayment(
         bill: Bill,
         paymentAmount: Double,
         paymentMethod: String,
         paymentDetails: PaymentDetails?
     ) {
-        // Create a new payment history entry
         val paymentHistory = PaymentHistory(
             paymentDate = com.google.firebase.Timestamp(Date()),
             amountPaid = paymentAmount,
             paymentMethod = paymentMethod
         )
 
-        // Calculate new paidAmount
         val newPaidAmount = bill.paidAmount + paymentAmount
 
-        // Determine new paymentStatus
         val newPaymentStatus = when {
             newPaidAmount >= bill.amount -> "Paid"
             newPaidAmount > 0 -> "Partially Paid"
             else -> "Unpaid"
         }
 
-        // Prepare the updated bill data
         val updatedBill = hashMapOf<String, Any>(
             "paidAmount" to newPaidAmount,
             "paymentStatus" to newPaymentStatus,
             "paymentHistory" to FieldValue.arrayUnion(paymentHistory.toMap())
         )
 
-        // If payment method is Credit or Cheque, handle dueDate and paymentDetails
         if (paymentMethod == "Credit" && paymentDetails?.creditTermDays != null) {
             val dueDate = Calendar.getInstance()
             dueDate.add(Calendar.DAY_OF_YEAR, paymentDetails.creditTermDays!!)
@@ -242,7 +205,6 @@ class OutstandingBillsFragment : Fragment() {
             updatedBill["paymentDetails"] = paymentDetails?.toMap() ?: HashMap<String, Any>()
         }
 
-        // Update the bill in Firestore
         db.collection("bills").document(bill.id)
             .update(updatedBill)
             .addOnSuccessListener {
@@ -255,39 +217,46 @@ class OutstandingBillsFragment : Fragment() {
             }
     }
 
-
-    private fun markChequeAsReturned(bill: Bill) {
+    fun markChequeAsReturned(bill: Bill) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Mark Cheque as Returned")
-        builder.setMessage("Are you sure you want to mark this cheque as returned?")
 
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            // Update the bill status and add to returned_cheques collection
+        val input = EditText(requireContext())
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.hint = "Enter reason for return"
+        builder.setView(input)
+
+        builder.setPositiveButton("Submit") { dialog, _ ->
+            val reason = input.text.toString().trim()
+            if (reason.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter a reason.", Toast.LENGTH_SHORT).show()
+                return@setPositiveButton
+            }
+
             val updates = hashMapOf<String, Any>(
                 "paymentStatus" to "Returned",
-                "chequeStatus" to "Returned" // Add a new field to track cheque status
+                "chequeStatus" to "Returned"
             )
 
             db.collection("bills").document(bill.id)
                 .update(updates)
                 .addOnSuccessListener {
-                    // Add the returned cheque to the returned_cheques collection
                     val returnedCheque = hashMapOf(
                         "billId" to bill.id,
-                        "shopId" to "bill.shopId",
-                        "shopName" to "bill.shopName",
+//                        "shopId" to bill.shopId, // Assuming shopId exists in Bill
+//                        "shopName" to bill.shopName, // Assuming shopName exists in Bill
                         "amount" to bill.amount,
                         "chequeNumber" to bill.paymentDetails?.chequeNumber,
                         "bankName" to bill.paymentDetails?.bankName,
                         "returnDate" to com.google.firebase.Timestamp(Date()),
-                        "reason" to "Insufficient Funds" // You can allow the user to input a reason
+                        "reason" to reason
                     )
 
                     db.collection("returned_cheques")
                         .add(returnedCheque)
                         .addOnSuccessListener {
-                            Toast.makeText(requireContext(), "Cheque marked as returned.", Toast.LENGTH_SHORT).show()
-                            fetchOutstandingBills() // Refresh the list
+                            Toast.makeText(requireContext(), "Cheque marked as returned with reason: $reason", Toast.LENGTH_SHORT).show()
+                            fetchOutstandingBills()
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(requireContext(), "Error marking cheque as returned: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -298,11 +267,10 @@ class OutstandingBillsFragment : Fragment() {
                 }
         }
 
-        builder.setNegativeButton("No") { dialog, _ ->
+        builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
         }
 
         builder.create().show()
     }
-
 }

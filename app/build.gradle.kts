@@ -68,6 +68,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    // Add other necessary dependencies
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("com.itextpdf:itextpdf:5.5.13.3")
+    implementation ("androidx.core:core:1.9.0")
 
 }

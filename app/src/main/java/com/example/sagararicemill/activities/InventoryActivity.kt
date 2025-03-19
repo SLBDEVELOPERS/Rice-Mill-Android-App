@@ -39,6 +39,9 @@ class InventoryActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewInventory)
         fabAddRiceBag = findViewById(R.id.fabAddRiceBag)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Setup RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         riceBagAdapter = RiceBagAdapter(
@@ -215,5 +218,10 @@ class InventoryActivity : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             // Optionally, highlight low stock items in the RecyclerView
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed() // Navigate back when arrow is clicked
+        return true
     }
 }

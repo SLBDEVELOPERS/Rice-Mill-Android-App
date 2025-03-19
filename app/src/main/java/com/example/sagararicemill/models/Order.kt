@@ -7,6 +7,7 @@ data class Order(
     var shopId: String = "",
     var shopName: String = "",
     var riceBagId: String = "",
+    var riceName: String = "",
     var size: String = "",
     var price: Double = 0.0,
     var quantity: Int = 0,
@@ -18,6 +19,7 @@ data class Order(
         return mapOf(
             "shopId" to shopId,
             "riceBagId" to riceBagId,
+            "riceName" to riceName,
             "size" to size,
             "price" to price,
             "quantity" to quantity,

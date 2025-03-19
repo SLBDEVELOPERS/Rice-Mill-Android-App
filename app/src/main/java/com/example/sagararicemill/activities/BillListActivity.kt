@@ -38,6 +38,9 @@ class BillListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill_list)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         recyclerViewBills = findViewById(R.id.recyclerViewBills)
         progressBarLoading = findViewById(R.id.progressBarLoading)
         textViewNoBills = findViewById(R.id.textViewNoBills)
@@ -152,5 +155,10 @@ class BillListActivity : AppCompatActivity() {
         progressBarLoading.visibility = if (loading) View.VISIBLE else View.GONE
         recyclerViewBills.visibility = if (loading) View.GONE else View.VISIBLE
         textViewNoBills.visibility = View.GONE
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed() // Navigate back when arrow is clicked
+        return true
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.sagararicemill.fragment.DashboardFragment
 import com.example.sagararicemill.fragment.HomeFragment
-import com.example.sagararicemill.fragment.IssueRiceFragment
 import com.example.sagararicemill.fragment.OutstandingBillsFragment
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity() {
 
     // Initialize Fragments
     private val dashboardFragment = DashboardFragment()
-    private val issueRiceFragment = IssueRiceFragment()
     private val homeFragment = HomeFragment()
     private val outstandingBillsFragment = OutstandingBillsFragment()
     // private val settingsFragment = SettingsFragment() // Optional

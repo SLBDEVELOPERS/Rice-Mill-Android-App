@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:title="Shops"
+        app:title="Shops"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_back"
         android:titleTextColor="@color/colorOnPrimary"
-        app:menu="@menu/shop_top_menu"
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <!-- RecyclerView for Shops -->

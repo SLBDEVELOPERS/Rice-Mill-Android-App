@@ -14,6 +14,12 @@
     <!-- Permission for internet access (if your app uses Firebase or other internet services) -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- Optional: Permission to access network state (useful for Firebase) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Feature declarations -->
+
+    <!-- Required for writing PDFs to external storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Required for reading the generated PDF file -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- Declare that your app uses Bluetooth -->
     <uses-feature
         android:name="android.hardware.bluetooth"

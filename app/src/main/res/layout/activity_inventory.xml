@@ -13,8 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:title="Inventory"
+        app:title="Inventory"
+        app:titleTextColor="@android:color/white"
         android:titleTextColor="@color/colorOnPrimary"
+        app:navigationIcon="@drawable/ic_back"
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <!-- RecyclerView for Rice Bags -->
