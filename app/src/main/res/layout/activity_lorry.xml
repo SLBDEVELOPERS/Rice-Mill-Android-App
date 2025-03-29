@@ -12,10 +12,9 @@
         android:id="@+id/topAppBarLorry"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         app:title="Lorry Management"
-        app:titleTextColor="@color/white"
-        android:titleTextColor="@color/colorOnPrimary"
+        app:titleTextColor="@android:color/black"
+        android:titleTextColor="@color/black"
         app:navigationIcon="@drawable/ic_back"
         />
 

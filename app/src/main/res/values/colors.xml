@@ -8,10 +8,11 @@
     <color name="colorPrimaryVariant">#3700B3</color>
     <color name="colorSecondary">#03DAC5</color>
     <color name="colorSecondaryVariant">#018786</color>
-    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackground">#F8F1E9</color>
     <color name="colorDivider">#E0E0E0</color>
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorOnSecondary">#000000</color>
+
 
     <color name="green">#4CAF50</color>
     <color name="orange">#FF5722</color>

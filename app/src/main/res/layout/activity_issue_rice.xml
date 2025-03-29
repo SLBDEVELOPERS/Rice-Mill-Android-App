@@ -5,15 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        app:titleTextColor="@android:color/black"
+        android:titleTextColor="@color/black"
         app:title="Add to Cart"
-        app:navigationIcon="@drawable/ic_back"
-        app:titleTextColor="@android:color/white"/>
+        app:navigationIcon="@drawable/ic_back"/>
 
     <!-- ScrollView with content -->
     <ScrollView

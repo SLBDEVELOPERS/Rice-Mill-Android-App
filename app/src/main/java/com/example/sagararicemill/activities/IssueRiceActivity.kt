@@ -445,12 +445,14 @@ class IssueRiceActivity : AppCompatActivity() {
     private fun createBill(orderList: List<Order>, grandTotal: Double, shop: Shop, paymentMethod: String,
                            chequeNumber: String? = null, bankName: String? = null, creditTermDays: Int? = null, advancePaid: Double = 0.0) {
         val billRef = db.collection("bills").document()
+
         val bill = Bill(
             id = billRef.id,
             orderIds = orderList.map { it.id },
             amount = grandTotal,
             billDate = Timestamp(Date()),
-            paymentMethod = paymentMethod
+            paymentMethod = paymentMethod,
+            shopId = shop.id
         )
 
         val billMap = bill.toMap()

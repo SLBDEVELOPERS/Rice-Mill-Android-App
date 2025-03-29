@@ -197,35 +197,37 @@ class DashboardFragment : Fragment() {
                     shopIds.add(order.shopId)
                 }
 
-                // Fetch shop names for the orders
-                db.collection("shops").whereIn(FieldPath.documentId(), shopIds).get()
-                    .addOnSuccessListener { shopDocs ->
-                        val shopMap = mutableMapOf<String, String>()
-                        //Log.d(TAG, "Fetched shops: ${shopDocs.documents}")
-                        Log.d(TAG, "fetchRecentOrders: shopIds " + shopIds);
-                        for (shopDoc in shopDocs) {
-                            val shop = shopDoc.toObject(Shop::class.java)
-                            shop.id = shopDoc.id
-                            Log.d(TAG, "Fetched shops: ${shop.id}")
-                            shopMap[shop.id] = shop.name
-                        }
+                if(!documents.isEmpty){
+                    // Fetch shop names for the orders
+                    db.collection("shops").whereIn(FieldPath.documentId(), shopIds).get()
+                        .addOnSuccessListener { shopDocs ->
+                            val shopMap = mutableMapOf<String, String>()
+                            //Log.d(TAG, "Fetched shops: ${shopDocs.documents}")
+                            Log.d(TAG, "fetchRecentOrders: shopIds " + shopIds);
+                            for (shopDoc in shopDocs) {
+                                val shop = shopDoc.toObject(Shop::class.java)
+                                shop.id = shopDoc.id
+                                Log.d(TAG, "Fetched shops: ${shop.id}")
+                                shopMap[shop.id] = shop.name
+                            }
 
-                        // Update recentOrders with shop names
-                        for (order in recentOrders) {
-                            order.shopName = shopMap[order.shopId] ?: "Unknown Shop"
-                        }
+                            // Update recentOrders with shop names
+                            for (order in recentOrders) {
+                                order.shopName = shopMap[order.shopId] ?: "Unknown Shop"
+                            }
 
-                        recyclerViewRecentOrders.adapter?.notifyDataSetChanged()
-                        Log.d(TAG, "Fetched ${recentOrders.size} recent orders with shop names.")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e(TAG, "Error fetching shop names: ", e)
-                        Toast.makeText(
-                            requireContext(),
-                            "Error fetching shop names: ${e.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                            recyclerViewRecentOrders.adapter?.notifyDataSetChanged()
+                            Log.d(TAG, "Fetched ${recentOrders.size} recent orders with shop names.")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Error fetching shop names: ", e)
+                            Toast.makeText(
+                                requireContext(),
+                                "Error fetching shop names: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error fetching recent orders: ", exception)

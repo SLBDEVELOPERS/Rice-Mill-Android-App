@@ -18,7 +18,7 @@
         <!-- Background and surface -->
         <item name="android:colorBackground">#A3998C</item> <!-- Off-white -->
         <item name="colorOnBackground">#2A2E2F</item> <!-- Softer dark gray -->
-        <item name="colorSurface">#D5D2D2</item> <!-- Pure white -->
+        <item name="colorSurface">#FFFFFF</item> <!-- Pure white -->
         <item name="colorOnSurface">#2A2E2F</item> <!-- Softer dark gray -->
 
         <!-- Error colors -->
@@ -35,7 +35,7 @@
         <item name="materialButtonStyle">@style/Widget.SagaraRiceMill.Button</item>
         <item name="textInputStyle">@style/Widget.SagaraRiceMill.TextInputLayout</item>
         <item name="android:windowBackground">#F8F1E9</item>
-        <item name="android:statusBarColor">#8D5524</item>
+        <item name="android:statusBarColor">#F8F1E9</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
@@ -74,8 +74,8 @@
 
     <!-- Button styles -->
     <style name="Widget.SagaraRiceMill.Button" parent="Widget.Material3.Button">
-        <item name="android:backgroundTint">#8D5524</item>
-        <item name="android:textColor">#FFFFFF</item>
+<!--        <item name="android:backgroundTint">#8D5524</item>-->
+<!--        <item name="android:textColor">#FFFFFF</item>-->
         <item name="cornerRadius">12dp</item>
         <item name="android:padding">14dp</item>
         <item name="elevation">2dp</item>
@@ -93,12 +93,12 @@
     </style>
 
     <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonStyle</item>
-        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonStyle</item>
+<!--        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonStyle</item>-->
+<!--        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonStyle</item>-->
         <item name="android:background">#F8F1E9</item>
     </style>
 
-    <style name="DialogButtonStyle" parent="Widget.Material3.Button.TextButton">
-        <item name="android:textColor">@color/white</item>
-    </style>
+<!--    <style name="DialogButtonStyle" parent="Widget.Material3.Button.TextButton">-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--    </style>-->
 </resources>

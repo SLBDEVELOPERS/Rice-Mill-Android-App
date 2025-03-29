@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
         }
 
         reportsCard.setOnClickListener {
-            startActivity(Intent(requireContext(), ReportsActivity::class.java))
+            startActivity(Intent(requireContext(), SalesReportActivity::class.java))
         }
 
         fleetManagementCard.setOnClickListener {

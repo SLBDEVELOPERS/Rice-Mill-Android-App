@@ -13,7 +13,8 @@ data class Bill(
     var dueDate: Timestamp? = null,      // Existing field: applicable for Credit and Cheque
     var paymentDetails: PaymentDetails? = null, // Existing field: additional payment info
     var paidAmount: Double = 0.0,        // New field: Total amount paid
-    var paymentHistory: List<PaymentHistory> = listOf() // New field: History of payments
+    var paymentHistory: List<PaymentHistory> = listOf(), // New field: History of payments
+    var shopId: String = ""
 ) {
     fun toMap(): Map<String, Any> {
         val map = mutableMapOf(
@@ -24,7 +25,8 @@ data class Bill(
             "paymentStatus" to paymentStatus,
             "chequeStatus" to chequeStatus,
             "paidAmount" to paidAmount,
-            "paymentHistory" to paymentHistory.map { it.toMap() }
+            "paymentHistory" to paymentHistory.map { it.toMap() },
+            "shopId" to shopId
         )
 
         dueDate?.let {

@@ -1,5 +1,6 @@
 package com.example.sagararicemill.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -46,14 +47,15 @@ class BillActivity : AppCompatActivity() {
     private lateinit var textViewTotalAmount: TextView
     private lateinit var buttonPrintBill: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
 
         printerHelper = PrinterHelper(this)
 
+        setSupportActionBar(findViewById(R.id.topAppBarShop))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Bill Details"
 
         // Initialize views
         textViewBillId = findViewById(R.id.textViewBillId)
@@ -277,7 +279,7 @@ class BillActivity : AppCompatActivity() {
 
 
     private fun showPrintOrSendDialog(shop: Shop, orderList: List<Order>, bill: Bill) {
-        val options = arrayOf("Print Bill", "Export as PDF")
+        val options = arrayOf("Print Bill", "Export as PDF", "Share PDF")
         AlertDialog.Builder(this)
             .setTitle("Choose Option")
             .setItems(options) { _, which ->
@@ -285,6 +287,9 @@ class BillActivity : AppCompatActivity() {
                     0 -> printerHelper.printBill(shop, orderList, bill)
                     1 -> CoroutineScope(Dispatchers.Main).launch {
                         exportBillToPdf(shop, orderList, bill)
+                    }
+                    2 -> CoroutineScope(Dispatchers.Main).launch {
+                        shareBillAsPdf(shop, orderList, bill)
                     }
                 }
             }
@@ -389,10 +394,111 @@ class BillActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
-        // Handle the back arrow button press
-        finish()
+        onBackPressed() // Navigate back when arrow is clicked
         return true
+    }
+
+    private fun shareBillAsPdf(shop: Shop, orderList: List<Order>, bill: Bill) {
+        try {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+                return
+            }
+
+            val document = com.itextpdf.text.Document()
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val fileName = "Bill_${bill.id}_$timeStamp.pdf"
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                fileName
+            )
+            PdfWriter.getInstance(document, FileOutputStream(file))
+
+            document.open()
+
+            // Add title
+            val title = com.itextpdf.text.Paragraph("SAGARA RICE MILL - INVOICE")
+            title.alignment = com.itextpdf.text.Element.ALIGN_CENTER
+            title.font = com.itextpdf.text.Font(
+                com.itextpdf.text.Font.FontFamily.HELVETICA,
+                16f,
+                com.itextpdf.text.Font.BOLD
+            )
+            document.add(title)
+            document.add(com.itextpdf.text.Paragraph(" "))
+
+            // Bill details
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            val billDate = bill.billDate?.toDate()?.let { dateFormat.format(it) } ?: "N/A"
+            document.add(com.itextpdf.text.Paragraph("Bill: ${bill.id}    Date: $billDate"))
+            document.add(com.itextpdf.text.Paragraph("Shop: ${shop.name}"))
+            document.add(com.itextpdf.text.Paragraph("Address: ${shop.address}"))
+            document.add(com.itextpdf.text.Paragraph(" "))
+
+            // Table
+            val table = PdfPTable(5)
+            table.widthPercentage = 100f
+            table.setWidths(floatArrayOf(2.5f, 1.5f, 1f, 1.5f, 1.5f))
+
+            // Headers
+            arrayOf("Description", "Size", "Qty", "Rate", "Amount").forEach { header ->
+                val cell = com.itextpdf.text.pdf.PdfPCell(com.itextpdf.text.Phrase(header))
+                cell.horizontalAlignment = com.itextpdf.text.Element.ALIGN_CENTER
+                table.addCell(cell)
+            }
+
+            // Items
+            for (order in orderList) {
+                table.addCell(order?.riceName ?: "Unknown")
+                table.addCell(order.size)
+                table.addCell(order.quantity.toString())
+                table.addCell(String.format("%.2f", order.price))
+                table.addCell(String.format("%.2f", order.totalPrice))
+            }
+            document.add(table)
+            document.add(com.itextpdf.text.Paragraph(" "))
+
+            // Totals
+            val subtotal = orderList.sumOf { it.totalPrice }
+            val discount = 50.0
+            val taxRate = 0.05
+            val taxAmount = (subtotal - discount) * taxRate
+            val transportFee = 100.0
+
+            val totals = com.itextpdf.text.Paragraph()
+            totals.add("Payment: ${bill.paymentMethod}\n")
+            totals.add("Subtotal: Rs %.2f\n".format(subtotal))
+            totals.add("Discount: Rs %.2f\n".format(discount))
+            totals.add("Tax (5%%): Rs %.2f\n".format(taxAmount))
+            totals.add("Transport: Rs %.2f\n".format(transportFee))
+            totals.add("TOTAL: Rs %.2f".format(bill.amount))
+            totals.alignment = com.itextpdf.text.Element.ALIGN_RIGHT
+            document.add(totals)
+
+            // Footer
+            document.add(com.itextpdf.text.Paragraph(" "))
+            document.add(com.itextpdf.text.Paragraph("Status: ${if (orderList.all { it.deliveryStatus == "Delivered" }) "Delivered" else "Partial"}"))
+            document.add(com.itextpdf.text.Paragraph("Thank you!"))
+
+            document.close()
+
+            // Share the PDF
+            val uri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "application/pdf"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Bill ${bill.id}")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Here is the bill for ${shop.name} dated $billDate")
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(Intent.createChooser(shareIntent, "Share PDF via"))
+
+            Toast.makeText(this, "PDF ready for sharing", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error sharing PDF: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

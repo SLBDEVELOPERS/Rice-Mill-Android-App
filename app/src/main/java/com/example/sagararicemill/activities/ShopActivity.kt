@@ -34,7 +34,7 @@ class ShopActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewShops)
         fabAddShop = findViewById(R.id.fabAddShop)
 
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.topAppBarShop))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Setup RecyclerView

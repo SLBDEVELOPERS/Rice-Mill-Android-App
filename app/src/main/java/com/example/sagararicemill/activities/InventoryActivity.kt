@@ -39,7 +39,7 @@ class InventoryActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewInventory)
         fabAddRiceBag = findViewById(R.id.fabAddRiceBag)
 
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.topAppBarShop))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Setup RecyclerView

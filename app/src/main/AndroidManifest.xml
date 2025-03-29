@@ -59,7 +59,6 @@
             </intent-filter>
         </activity> <!-- Other Activities -->
         <activity android:name=".activities.IssueRiceActivity" />
-        <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.AddEditRiceBagActivity" />
         <activity android:name=".activities.AddEditShopActivity" />
@@ -68,6 +67,17 @@
         <activity android:name=".activities.ShopActivity" />
         <activity android:name=".activities.BillActivity" />
         <activity android:name=".activities.ReportsActivity" />
+        <activity android:name=".activities.SalesReportActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

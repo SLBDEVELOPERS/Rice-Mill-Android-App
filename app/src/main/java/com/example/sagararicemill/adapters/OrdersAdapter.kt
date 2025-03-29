@@ -11,9 +11,11 @@ import com.example.sagararicemill.models.Order
 class OrdersAdapter(private val orders: List<Order>) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
     class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val textViewOrderItem: TextView = itemView.findViewById(R.id.textViewOrderItem)
-        val textViewOrderQuantity: TextView = itemView.findViewById(R.id.textViewOrderQuantity)
-        val textViewOrderPrice: TextView = itemView.findViewById(R.id.textViewOrderPrice)
+        val textViewRiceName: TextView = itemView.findViewById(R.id.textViewRiceName)
+        val textViewSize: TextView = itemView.findViewById(R.id.textViewSize)
+        val textViewQuantity: TextView = itemView.findViewById(R.id.textViewQuantity)
+        val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
+        val textViewTotalPrice: TextView = itemView.findViewById(R.id.textViewTotalPrice)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -25,8 +27,10 @@ class OrdersAdapter(private val orders: List<Order>) : RecyclerView.Adapter<Orde
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orders[position]
-        holder.textViewOrderItem.text = order.size
-        holder.textViewOrderQuantity.text = order.quantity.toString()
-        holder.textViewOrderPrice.text = "Rs %.2f".format(order.totalPrice)
+        holder.textViewRiceName.text = order.riceName
+        holder.textViewSize.text = order.size
+        holder.textViewQuantity.text = order.quantity.toString()
+        holder.textViewPrice.text = String.format("%.2f", order.price)
+        holder.textViewTotalPrice.text = String.format("%.2f", order.totalPrice)
     }
 }

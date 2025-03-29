@@ -9,13 +9,12 @@
 
     <!-- Material Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBarInventory"
+        android:id="@+id/topAppBarShop"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         app:title="Inventory"
-        app:titleTextColor="@android:color/white"
-        android:titleTextColor="@color/colorOnPrimary"
+        app:titleTextColor="@android:color/black"
+        android:titleTextColor="@color/black"
         app:navigationIcon="@drawable/ic_back"
         app:layout_scrollFlags="scroll|enterAlways" />
 

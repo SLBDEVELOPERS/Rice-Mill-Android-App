@@ -12,11 +12,10 @@
         android:id="@+id/topAppBarShop"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         app:title="Shops"
-        app:titleTextColor="@android:color/white"
+        app:titleTextColor="@android:color/black"
+        android:titleTextColor="@color/black"
         app:navigationIcon="@drawable/ic_back"
-        android:titleTextColor="@color/colorOnPrimary"
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <!-- RecyclerView for Shops -->
