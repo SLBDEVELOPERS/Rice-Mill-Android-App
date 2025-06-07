@@ -112,16 +112,16 @@ class SalesReportActivity : AppCompatActivity() {
 
             // Export Data as CSV
             val csvFile = File(storageDir, "SalesReport_$timeStamp.csv")
-            FileWriter(csvFile).use { writer ->
-                writer.append("Type,Label,Revenue\n")
-                fragment.riceTypeRevenue.forEach { (riceType, revenue) ->
-                    writer.append("Rice Type,$riceType,$revenue\n")
-                }
-                fragment.storeRevenue.forEach { (store, revenue) ->
-                    writer.append("Store,$store,$revenue\n")
-                }
-                writer.append("Total,,${fragment.totalRevenue}\n")
-            }
+//            FileWriter(csvFile).use { writer ->
+//                writer.append("Type,Label,Revenue\n")
+//                fragment.riceTypeRevenue.forEach { (riceType, revenue) ->
+//                    writer.append("Rice Type,$riceType,$revenue\n")
+//                }
+//                fragment.storeRevenue.forEach { (store, revenue) ->
+//                    writer.append("Store,$store,$revenue\n")
+//                }
+//                writer.append("Total,,${fragment.totalRevenue}\n")
+//            }
             Toast.makeText(this, "CSV saved to ${csvFile.absolutePath}", Toast.LENGTH_LONG).show()
         }
     }

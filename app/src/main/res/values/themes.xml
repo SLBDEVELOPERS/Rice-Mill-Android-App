@@ -39,6 +39,11 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
     <!-- Typography -->
     <style name="TextAppearance.SagaraRiceMill.Headline.Large" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="android:textSize">24sp</item>

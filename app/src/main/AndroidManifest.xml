@@ -50,14 +50,14 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Other Activities -->
+        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".activities.IssueRiceActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.AddEditRiceBagActivity" />
